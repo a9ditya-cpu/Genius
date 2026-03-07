@@ -20,6 +20,15 @@ jobs:
           username: ubuntu # Default username for Ubuntu AMIs
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Create a 2GB swap file to prevent the EC2 instance from running out of memory and freezing
+            if [ ! -f /swapfile ]; then
+              echo "Creating Swap File..."
+              sudo fallocate -l 2G /swapfile || sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+              sudo chmod 600 /swapfile
+              sudo mkswap /swapfile
+              sudo swapon /swapfile
+            fi
+            
             # Navigate to the home directory
             cd ~
             
