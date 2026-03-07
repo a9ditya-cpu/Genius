@@ -13,7 +13,7 @@ function App() {
     const fetchInventory = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('/inventory/');
+            const res = await axios.get('/inventory');
             if (res.data && res.data.success) {
                 setInventory(res.data.data);
             }
@@ -33,7 +33,7 @@ function App() {
             const payload = { product_id: productId };
             if (customPrice) payload.manual_price = customPrice;
 
-            const res = await axios.post('/markdown/', payload);
+            const res = await axios.post('/markdown', payload);
             if (res.data && res.data.success) {
                 // Refresh inventory data after successful markdown
                 fetchInventory();
