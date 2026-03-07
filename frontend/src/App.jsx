@@ -9,8 +9,8 @@ import ExecutiveDashboard from './pages/ExecutiveDashboard';
 import InventoryManager from './pages/InventoryManager';
 import MarkdownAI from './pages/MarkdownAI';
 
-// Proxy all AWS API traffic internally through the Vite Server (Port 5173) to bypass Firewalls
-const API_URL = '/api';
+// Hackproof API Routing: Connect to whatever IP address the user's browser is currently looking at
+const API_URL = `http://${window.location.hostname}:5000/api`;
 axios.defaults.baseURL = API_URL;
 
 // Secure Authenticated Route Wrapper
