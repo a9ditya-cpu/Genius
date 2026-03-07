@@ -33,8 +33,8 @@ jobs:
             # Pull the latest code from GitHub
             git pull origin main
             
-            # Export the EC2 IP for docker-compose to pass to the frontend
-            export VITE_API_BASE_URL="http://${{ secrets.EC2_HOST }}:5000/api"
+            # Export the EC2 IP directly to the default Vite .env file to guarantee ingestion
+            echo "VITE_API_BASE_URL=http://${{ secrets.EC2_HOST }}:5000/api" > frontend/.env
             
             # Export the MongoDB Atlas connection string so docker-compose can pass it to the backend
             export MONGO_URI="${{ secrets.MONGO_URI }}"
