@@ -36,6 +36,9 @@ jobs:
             # Add the EC2 IP to the frontend environment
             echo "VITE_API_BASE_URL=http://${{ secrets.EC2_HOST }}:5000/api" > frontend/.env.production
             
+            # Export the MongoDB Atlas connection string so docker-compose can pass it to the backend
+            export MONGO_URI="${{ secrets.MONGO_URI }}"
+            
             # Tear down old containers to prevent ContainerConfig recreation bugs
             docker-compose down
             
