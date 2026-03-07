@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Dashboard from './components/Dashboard';
 
-// Ensure the API URL is handled properly, defaulting to localhost for dev
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+// Hackproof API Routing: Connect to whatever IP address the user's browser is currently looking at
+const API_URL = `http://${window.location.hostname}:5000/api`;
 axios.defaults.baseURL = API_URL;
 
 function App() {
