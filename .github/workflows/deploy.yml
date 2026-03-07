@@ -51,5 +51,9 @@ jobs:
             # Tear down old containers to prevent ContainerConfig recreation bugs
             docker-compose down
             
-            # Rebuild and restart the docker containers in the background
-            docker-compose up --build -d
+            # Rebuild the containers ONE AT A TIME to prevent the tiny 1GB Server from freezing
+            docker-compose build backend
+            docker-compose build frontend
+            
+            # Start everything in the background
+            docker-compose up -d
