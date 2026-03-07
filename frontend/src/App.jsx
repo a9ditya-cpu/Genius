@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import Dashboard from './components/Dashboard';
 
-// Hackproof API Routing: Connect to whatever IP address the user's browser is currently looking at
-const API_URL = `http://${window.location.hostname}:5000/api`;
+// Layouts and Pages
+import Layout from './components/Layout';
+import Login from './pages/Login';
+import ExecutiveDashboard from './pages/ExecutiveDashboard';
+import InventoryManager from './pages/InventoryManager';
+import MarkdownAI from './pages/MarkdownAI';
+
+// Proxy all AWS API traffic internally through the Vite Server (Port 5173) to bypass Firewalls
+const API_URL = '/api';
 axios.defaults.baseURL = API_URL;
+
+// Secure Authenticated Route Wrapper
+const ProtectedRoute = ({ children }) => {
+    const isAuthenticated = localStorage.getItem('auth') === 'true';
+    return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
 
 function App() {
     const [inventory, setInventory] = useState([]);
@@ -12,7 +25,6 @@ function App() {
 
     const fetchInventory = async () => {
         try {
-            setLoading(true);
             const res = await axios.get('/inventory');
             if (res.data && res.data.success) {
                 setInventory(res.data.data);
@@ -24,10 +36,6 @@ function App() {
         }
     };
 
-    useEffect(() => {
-        fetchInventory();
-    }, []);
-
     const triggerMarkdown = async (productId, customPrice = null) => {
         try {
             const payload = { product_id: productId };
@@ -35,7 +43,6 @@ function App() {
 
             const res = await axios.post('/markdown', payload);
             if (res.data && res.data.success) {
-                // Refresh inventory data after successful markdown
                 fetchInventory();
             }
         } catch (error) {
@@ -43,24 +50,40 @@ function App() {
         }
     };
 
-    return (
-        <div className="app-container animate-fade">
-            <header className="header glass-panel">
-                <div>
-                    <h1 className="text-gradient" style={{ marginBottom: 0 }}>Smart Markdown System</h1>
-                    <p className="text-muted" style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>AI-Powered In-Store Inventory Management</p>
-                </div>
-                <button onClick={fetchInventory}>Refresh Data</button>
-            </header>
+    useEffect(() => {
+        fetchInventory();
+    }, []);
 
-            {loading ? (
-                <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-                    <h2>Loading Data...</h2>
-                </div>
-            ) : (
-                <Dashboard inventory={inventory} onMarkdown={triggerMarkdown} />
-            )}
-        </div>
+    if (loading) {
+        return (
+            <div style={{ textAlign: 'center', padding: '10rem', color: 'var(--text-muted)' }}>
+                <h2>Initializing System...</h2>
+            </div>
+        );
+    }
+
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* Public Authentication Route */}
+                <Route path="/login" element={<Login />} />
+
+                {/* Secure Workspaces */}
+                <Route element={
+                    <ProtectedRoute>
+                        <Layout
+                            inventory={inventory}
+                            fetchInventory={fetchInventory}
+                            triggerMarkdown={triggerMarkdown}
+                        />
+                    </ProtectedRoute>
+                }>
+                    <Route path="/" element={<ExecutiveDashboard />} />
+                    <Route path="/inventory" element={<InventoryManager />} />
+                    <Route path="/markdown-ai" element={<MarkdownAI />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
