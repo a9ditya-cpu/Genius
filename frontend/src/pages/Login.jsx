@@ -8,15 +8,14 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        if (username === 'admin' && password === 'admin123') {
-            localStorage.setItem('auth', 'true');
-            localStorage.setItem('authMethod', 'local');
-            navigate('/');
-        } else {
-            setError(true);
-        }
+    const handleLogin = (role) => {
+        localStorage.setItem('auth', 'true');
+        localStorage.setItem('role', role);
+        localStorage.setItem('authMethod', 'local');
+
+        if (role === 'CASHIER') navigate('/pos');
+        else if (role === 'MANAGER') navigate('/receive');
+        else navigate('/');
     };
 
     return (
@@ -39,31 +38,26 @@ export default function Login() {
                     </div>
                 )}
 
-                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div className="input-group">
-                        <User size={18} className="input-icon" />
-                        <input
-                            type="text"
-                            placeholder="Username (admin)"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
-                            className="auth-input"
-                        />
-                    </div>
-                    <div className="input-group">
-                        <Lock size={18} className="input-icon" />
-                        <input
-                            type="password"
-                            placeholder="Password (admin123)"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            className="auth-input"
-                        />
-                    </div>
-                    <button type="submit" style={{ marginTop: '0.5rem', padding: '0.75rem' }}>
-                        Secure Login
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <button
+                        onClick={() => handleLogin('CASHIER')}
+                        style={{ padding: '1rem', background: 'transparent', border: '1px solid var(--border-light)', color: 'var(--text-main)', display: 'flex', justifyContent: 'flex-start' }}
+                    >
+                        <User size={18} /> Authenticate as POS Cashier
                     </button>
-                </form>
+                    <button
+                        onClick={() => handleLogin('MANAGER')}
+                        style={{ padding: '1rem', background: 'transparent', border: '1px solid var(--border-light)', color: 'var(--text-main)', display: 'flex', justifyContent: 'flex-start' }}
+                    >
+                        <User size={18} /> Authenticate as Stock Manager
+                    </button>
+                    <button
+                        onClick={() => handleLogin('ADMIN')}
+                        style={{ padding: '1rem', display: 'flex', justifyContent: 'flex-start' }}
+                    >
+                        <Lock size={18} /> Authenticate as Executive Admin
+                    </button>
+                </div>
             </div>
         </div>
     );

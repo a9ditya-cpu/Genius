@@ -7,11 +7,24 @@ import Login from './pages/Login';
 import ExecutiveDashboard from './pages/ExecutiveDashboard';
 import InventoryManager from './pages/InventoryManager';
 import MarkdownAI from './pages/MarkdownAI';
+import PointOfSale from './pages/PointOfSale';
+import WarehouseReceive from './pages/WarehouseReceive';
 
 // Secure Authenticated Route Wrapper
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = localStorage.getItem('auth') === 'true';
     return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
+// Strict Role-Based Route Guard
+const RoleRoute = ({ children, allowedRoles }) => {
+    const role = localStorage.getItem('role') || 'ADMIN';
+    if (!allowedRoles.includes(role)) {
+        if (role === 'CASHIER') return <Navigate to="/pos" replace />;
+        if (role === 'MANAGER') return <Navigate to="/receive" replace />;
+        return <Navigate to="/" replace />;
+    }
+    return children;
 };
 
 const MOCK_DATA = [
@@ -30,6 +43,7 @@ const MOCK_DATA = [
 function App() {
     // Frontend-only state management
     const [inventory, setInventory] = useState([]);
+    const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchInventory = async () => {
@@ -41,19 +55,37 @@ function App() {
     };
 
     const triggerMarkdown = async (productId, customPrice = null) => {
-        // Find item to mathematically calculate markdown
         const itemToUpdate = inventory.find(i => i.product_id === productId);
         if (!itemToUpdate) return;
-
-        // Calculate new price (either strictly defined customPrice, or 15% automatic AI cut)
         const newPrice = customPrice !== null ? customPrice : parseFloat((itemToUpdate.base_price * 0.85).toFixed(2));
-
-        // Update React state instantly
         setInventory(prev => prev.map(item =>
             item.product_id === productId
                 ? { ...item, current_price: newPrice }
                 : item
         ));
+    };
+
+    const updateStock = (productId, quantityChange) => {
+        setInventory(prev => prev.map(item =>
+            item.product_id === productId
+                ? { ...item, current_quantity: Math.max(0, item.current_quantity + quantityChange) }
+                : item
+        ));
+    };
+
+    const recordTransaction = (cartItems) => {
+        const timestamp = new Date().toISOString();
+        const tx = {
+            id: 'TXN-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+            timestamp,
+            items: cartItems.map(item => ({ product_id: item.product_id, qty: item.cartQty, price: item.current_price }))
+        };
+        setTransactions(prev => [...prev, tx]);
+
+        // Simultaneously decrement warehouse inventory based on the sale
+        cartItems.forEach(item => {
+            updateStock(item.product_id, -item.cartQty);
+        });
     };
 
     useEffect(() => {
@@ -82,31 +114,37 @@ function App() {
                             inventory={inventory}
                             fetchInventory={fetchInventory}
                             triggerMarkdown={triggerMarkdown}
+                            updateStock={updateStock}
+                            recordTransaction={recordTransaction}
                         />
                     </ProtectedRoute>
                 }>
-                    <Route path="/" element={<ExecutiveDashboard />} />
-                    <Route path="/inventory" element={<InventoryManager />} />
-                    <Route path="/markdown-ai" element={<MarkdownAI />} />
+                    <Route path="/" element={<RoleRoute allowedRoles={['ADMIN']}><ExecutiveDashboard /></RoleRoute>} />
+                    <Route path="/inventory" element={<RoleRoute allowedRoles={['ADMIN', 'MANAGER']}><InventoryManager /></RoleRoute>} />
+                    <Route path="/markdown-ai" element={<RoleRoute allowedRoles={['ADMIN']}><MarkdownAI /></RoleRoute>} />
+                    <Route path="/pos" element={<RoleRoute allowedRoles={['ADMIN', 'CASHIER']}><PointOfSale /></RoleRoute>} />
+                    <Route path="/receive" element={<RoleRoute allowedRoles={['ADMIN', 'MANAGER']}><WarehouseReceive /></RoleRoute>} />
                     {/* Fake Settings Page for Enterprise feel */}
                     <Route path="/settings" element={
-                        <div className="workspace-panel glass-panel">
-                            <h2>System Settings</h2>
-                            <p className="text-muted">Enterprise Configuration & Active Directory</p>
-                            <hr style={{ margin: '2rem 0', borderColor: '#e2e8f0' }} />
-                            <div className="grid-layout recommendations-grid">
-                                <div className="glass-panel" style={{ background: '#f8fafc' }}>
-                                    <h3>User Management</h3>
-                                    <p>Azure AD Sync is <strong>Active</strong></p>
-                                    <button className="btn-success" style={{ marginTop: '1rem' }}>Force Sync Users</button>
-                                </div>
-                                <div className="glass-panel" style={{ background: '#f8fafc' }}>
-                                    <h3>ML Engine Preferences</h3>
-                                    <p>Auto-Approve Threshold: <strong>12%</strong></p>
-                                    <button style={{ marginTop: '1rem', background: '#64748b' }}>Configure Models</button>
+                        <RoleRoute allowedRoles={['ADMIN']}>
+                            <div className="workspace-panel glass-panel">
+                                <h2>System Settings</h2>
+                                <p className="text-muted">Enterprise Configuration & Active Directory</p>
+                                <hr style={{ margin: '2rem 0', borderColor: '#e2e8f0' }} />
+                                <div className="grid-layout recommendations-grid">
+                                    <div className="glass-panel" style={{ background: '#f8fafc' }}>
+                                        <h3>User Management</h3>
+                                        <p>Azure AD Sync is <strong>Active</strong></p>
+                                        <button className="btn-success" style={{ marginTop: '1rem' }}>Force Sync Users</button>
+                                    </div>
+                                    <div className="glass-panel" style={{ background: '#f8fafc' }}>
+                                        <h3>ML Engine Preferences</h3>
+                                        <p>Auto-Approve Threshold: <strong>12%</strong></p>
+                                        <button style={{ marginTop: '1rem', background: '#64748b' }}>Configure Models</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </RoleRoute>
                     } />
                 </Route>
             </Routes>

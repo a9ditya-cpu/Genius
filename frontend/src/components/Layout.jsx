@@ -1,14 +1,15 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Bot, Settings, LogOut, Hexagon } from 'lucide-react';
+import { LayoutDashboard, Package, Bot, Settings, LogOut, Hexagon, ShoppingCart, Truck } from 'lucide-react';
 
-export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
+export default function Layout({ inventory, fetchInventory, triggerMarkdown, updateStock, recordTransaction }) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Show MS user name if logged in, else default Admin
+    // Show user name based on role
     const msUser = localStorage.getItem('msUser');
-    const displayName = msUser || 'Admin';
+    const role = localStorage.getItem('role') || 'ADMIN';
+    const displayName = msUser || (role === 'CASHIER' ? 'POS Terminal 1' : role === 'MANAGER' ? 'Warehouse Manager' : 'Executive Admin');
 
     const handleLogout = () => {
         // Clear all auth methods
@@ -18,12 +19,16 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
         navigate('/login');
     };
 
-    const navItems = [
-        { path: '/', label: 'Executive Dashboard', icon: <LayoutDashboard size={20} /> },
-        { path: '/inventory', label: 'Inventory Manager', icon: <Package size={20} /> },
-        { path: '/markdown-ai', label: 'MarkDown Intelligence', icon: <Bot size={20} /> },
-        { path: '/settings', label: 'System Settings', icon: <Settings size={20} /> }
+    const allNavItems = [
+        { path: '/', label: 'Executive Dashboard', icon: <LayoutDashboard size={20} />, roles: ['ADMIN'] },
+        { path: '/pos', label: 'Point of Sale (POS)', icon: <ShoppingCart size={20} />, roles: ['CASHIER', 'ADMIN'] },
+        { path: '/receive', label: 'Receive Shipments', icon: <Truck size={20} />, roles: ['MANAGER', 'ADMIN'] },
+        { path: '/inventory', label: 'Inventory Manager', icon: <Package size={20} />, roles: ['MANAGER', 'ADMIN'] },
+        { path: '/markdown-ai', label: 'MarkDown Intelligence', icon: <Bot size={20} />, roles: ['ADMIN'] },
+        { path: '/settings', label: 'System Settings', icon: <Settings size={20} />, roles: ['ADMIN'] }
     ];
+
+    const navItems = allNavItems.filter(item => item.roles.includes(role));
 
     return (
         <div className="app-layout">
@@ -63,7 +68,7 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
 
                 {/* Dynamic Page Content */}
                 <main className="page-content animate-fade">
-                    <Outlet context={{ inventory, fetchInventory, triggerMarkdown }} />
+                    <Outlet context={{ inventory, fetchInventory, triggerMarkdown, updateStock, recordTransaction }} />
                 </main>
             </div>
 
