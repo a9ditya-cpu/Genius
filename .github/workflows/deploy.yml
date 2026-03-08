@@ -49,7 +49,7 @@ jobs:
             
             # Rebuild the containers one at a time to save memory
             docker-compose build backend
-            docker-compose build frontend
+            docker-compose build --no-cache frontend
             
             # Start everything in the background
             docker-compose up -d
