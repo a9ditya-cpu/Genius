@@ -20,6 +20,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
             # Create a 2GB swap file to prevent the EC2 instance from running out of memory
             if [ ! -f /swapfile ]; then
               echo "Creating Swap File..."
@@ -38,8 +39,9 @@ jobs:
             
             cd Genius
             
-            # Pull the latest code from GitHub
-            git pull origin main
+            # Force pull the latest code and discard any accidental local changes on the server
+            git fetch --all
+            git reset --hard origin/main
             
             # Export the MongoDB Atlas connection string
             export MONGO_URI="${{ secrets.MONGO_URI }}"
