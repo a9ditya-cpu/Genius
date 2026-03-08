@@ -60,7 +60,7 @@ export default function MarkdownAI() {
                             </div>
                         </div>
 
-                        <div className="insight-box" style={{ background: 'rgba(6, 182, 212, 0.1)', padding: '1rem', borderRadius: '8px', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                        <div className="insight-box" style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
                             <Zap size={18} color="var(--accent-cyan)" style={{ marginTop: '0.2rem', flexShrink: 0 }} />
                             <p style={{ margin: 0, fontSize: '0.9rem' }}>{rec.impact}</p>
                         </div>

@@ -19,7 +19,7 @@ const Dashboard = ({ inventory, onMarkdown }) => {
             <div className="main-content" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ padding: '1rem', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '12px', color: 'var(--accent-blue)' }}>
+                        <div style={{ padding: '1rem', background: 'transparent', border: '1px solid var(--border-light)', borderRadius: '12px', color: 'var(--text-main)' }}>
                             <Layers size={24} />
                         </div>
                         <div>
@@ -28,7 +28,7 @@ const Dashboard = ({ inventory, onMarkdown }) => {
                         </div>
                     </div>
                     <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '12px', color: 'var(--accent-red)' }}>
+                        <div style={{ padding: '1rem', background: 'transparent', border: '1px solid var(--accent-red)', borderRadius: '12px', color: 'var(--accent-red)' }}>
                             <Package size={24} />
                         </div>
                         <div>
@@ -37,7 +37,7 @@ const Dashboard = ({ inventory, onMarkdown }) => {
                         </div>
                     </div>
                     <div className="glass-panel" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ padding: '1rem', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '12px', color: 'var(--accent-green)' }}>
+                        <div style={{ padding: '1rem', background: 'transparent', border: '1px solid var(--accent-green)', borderRadius: '12px', color: 'var(--accent-green)' }}>
                             <TrendingDown size={24} />
                         </div>
                         <div>

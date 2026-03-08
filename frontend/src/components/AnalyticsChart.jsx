@@ -53,7 +53,7 @@ const AnalyticsChart = ({ data }) => {
 
         svg.append("path")
             .datum(salesData)
-            .attr("fill", "rgba(37, 99, 235, 0.1)")
+            .attr("fill", "rgba(255, 255, 255, 0.1)")
             .attr("stroke", "var(--accent-blue)")
             .attr("stroke-width", 3)
             .attr("d", line);

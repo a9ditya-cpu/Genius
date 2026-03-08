@@ -1,28 +1,28 @@
 :root {
-  /* LIGHT ENTERPRISE THEME VARIABLES */
-  --bg-dark: #f1f5f9;
-  /* Page Background Background */
-  --bg-card: #ffffff;
-  /* Crisp White Panels */
-  --text-main: #0f172a;
-  /* Deep Slate for Headers */
-  --text-muted: #64748b;
-  /* Cool Gray for secondary text */
-  --accent-blue: #2563eb;
-  /* Primary Azure Blue */
-  --accent-cyan: #3b82f6;
-  /* Lighter Blue */
+  /* OM MISHRA MINIMALIST / TERMINAL THEME */
+  --bg-dark: #000000;
+  /* Pure Black Background */
+  --bg-card: #18181b;
+  /* Zinc-900 Panel Background */
+  --text-main: #ffffff;
+  /* Crisp White Text */
+  --text-muted: #a1a1aa;
+  /* Zinc-400 Secondary Text */
+  --accent-blue: #ffffff;
+  /* Primary Accent is now High-Contrast White */
+  --accent-cyan: #d4d4d8;
+  /* Zinc-300 Lighter Accent */
   --accent-red: #ef4444;
   /* Alert Red */
   --accent-green: #10b981;
   /* Success Green */
-  --border-light: #e2e8f0;
-  /* Crisp soft border */
+  --border-light: #27272a;
+  /* Zinc-800 borders */
 
-  /* Modern clean shadow instead of glass blur */
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* Flat design: No shadows */
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  font-family: ui-monospace, 'Geist Mono', 'IBM Plex Mono', 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
 }
 
 * {
@@ -66,13 +66,13 @@ h3 {
   color: var(--text-muted);
 }
 
-/* Azure Blue Buttons */
+/* High Contrast Pill Buttons */
 button {
-  background: var(--accent-blue);
-  color: white;
+  background: var(--text-main);
+  color: var(--bg-dark);
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.95rem;
@@ -80,14 +80,13 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: none;
 }
 
 button:hover {
-  background: #1d4ed8;
+  opacity: 0.8;
   transform: translateY(-1px);
-  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
 }
 
 button:active {
@@ -144,14 +143,14 @@ button:active {
   justify-content: center;
   min-height: 100vh;
   padding: 1rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  background: var(--bg-dark);
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
   padding: 3.5rem 2.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
 .input-group {
@@ -169,21 +168,20 @@ button:active {
 .auth-input,
 .search-bar input {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
   color: var(--text-main);
   padding: 0.75rem 1rem 0.75rem 2.8rem;
   border-radius: 6px;
   font-size: 1rem;
-  transition: all 0.2s;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s;
+  box-shadow: none;
 }
 
 .auth-input:focus,
 .search-bar input:focus {
   outline: none;
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: var(--text-muted);
 }
 
 .search-bar {
@@ -211,8 +209,9 @@ button:active {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: var(--bg-dark);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: none;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -242,14 +241,14 @@ button:active {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #e2e8f0;
+  background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: var(--accent-blue);
-  border: 2px solid #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--text-main);
+  border: 1px solid var(--border-light);
+  box-shadow: none;
 }
 
 .main-content-layout {
@@ -295,14 +294,15 @@ button:active {
 }
 
 .nav-link:hover {
-  background: #e2e8f0;
+  background: var(--bg-card);
   color: var(--text-main);
 }
 
 .nav-link.active {
-  background: var(--accent-blue);
-  color: white;
-  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  background: var(--text-main);
+  color: var(--bg-dark);
+  border-radius: 9999px;
+  box-shadow: none;
 }
 
 .page-content {
@@ -320,7 +320,7 @@ button:active {
   text-align: center;
   padding: 2rem;
   margin-top: auto;
-  background: #ffffff;
+  background: var(--bg-dark);
   border-top: 1px solid var(--border-light);
 }
 
@@ -361,11 +361,11 @@ th {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
-  background: #f8fafc;
+  background: var(--bg-dark);
 }
 
 tr:hover {
-  background: #f8fafc;
+  background: var(--bg-card);
 }
 
 /* Badges */
@@ -380,46 +380,46 @@ tr:hover {
 }
 
 .badge.red {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fecaca;
+  background: transparent;
+  color: var(--accent-red);
+  border: 1px solid var(--accent-red);
 }
 
 .badge.green {
-  background: #ecfdf5;
-  color: #059669;
-  border: 1px solid #a7f3d0;
+  background: transparent;
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
 }
 
 .badge.blue {
-  background: #eff6ff;
-  color: #2563eb;
-  border: 1px solid #bfdbfe;
+  background: transparent;
+  color: var(--accent-blue);
+  border: 1px solid var(--border-light);
 }
 
 .badge.yellow {
-  background: #fffbeb;
-  color: #d97706;
-  border: 1px solid #fde68a;
+  background: transparent;
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
 }
 
 /* Specific AI Components */
 .price-comparison {
-  background: #f8fafc;
+  background: var(--bg-card);
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-light);
 }
 
 .old .value {
   text-decoration: line-through;
-  color: #94a3b8 !important;
+  color: var(--text-muted) !important;
 }
 
 .insight-box {
-  background: #eff6ff;
+  background: var(--bg-card);
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid #bfdbfe;
-  color: #1e3a8a;
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
 }
