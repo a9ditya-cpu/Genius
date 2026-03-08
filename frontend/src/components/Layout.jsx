@@ -75,7 +75,7 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown, upd
             {/* Footer */}
             <footer className="main-footer">
                 <p className="text-muted" style={{ fontSize: '0.85rem' }}>
-                    &copy; 2024 Genius Enterprise Intelligence &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Privacy Policy</a> &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Terms of Service</a> &bull; Version 4.8.2
+                    &copy; 2026 Genius Enterprise Intelligence &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Privacy Policy</a> &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Terms of Service</a> &bull; Version 4.8.2
                 </p>
             </footer>
         </div>
