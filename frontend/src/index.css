@@ -423,3 +423,74 @@ tr:hover {
   border: 1px solid var(--border-light);
   color: var(--text-main);
 }
+
+/* ========================================================
+   MASSIVE MOBILE RESPONSIVENESS OVERHAUL
+   ======================================================== */
+@media (max-width: 768px) {
+
+  /* Stack Header vertically for small phones */
+  .main-header {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  /* Spread profile actions across full width */
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Collapse layout into a single column, reduce padding */
+  .main-content-layout {
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+    gap: 1.5rem;
+  }
+
+  /* Transform Sidebar from fixed vertical to flowing horizontal menu */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    background: transparent;
+    padding: 0;
+  }
+
+  .nav-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    flex: 1 1 auto;
+    justify-content: center;
+    border: 1px solid var(--border-light);
+  }
+
+  .nav-link.active {
+    border-color: var(--text-main);
+  }
+
+  /* Force pages to consume exact width of device and prevent spillover */
+  .page-content {
+    width: 100%;
+  }
+
+  /* Resize glass panels for tighter phone screens */
+  .glass-panel {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  /* KPI Grids: Force 2 columns if possible, 1 column on tiniest phones */
+  .grid-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
