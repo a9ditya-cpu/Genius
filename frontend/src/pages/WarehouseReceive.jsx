@@ -28,28 +28,40 @@ export default function WarehouseReceive() {
         setTimeout(() => setStatus(''), 3000);
     };
 
-    const handleNLPCommand = (e) => {
+    const handleNLPCommand = async (e) => {
         e.preventDefault();
         if (!nlpCommand.trim()) return;
 
         setStatus('');
-        setNlpStatus('Parsing semantic language architecture...');
+        setNlpStatus('Querying local BERT Neural Network...');
 
-        setTimeout(() => {
+        try {
+            // Compress the inventory state into string context for the ML model
+            const contextData = inventory.map(i => `${i.current_quantity}x ${i.name} (${i.product_id})`).join(", ");
+
+            const response = await fetch('http://localhost:5000/api/nlp/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: nlpCommand,
+                    context: contextData
+                })
+            });
+
+            const data = await response.json();
+
+            // Secondary heuristic check to apply UI mutations for the hackathon "intake" demo
             const text = nlpCommand.toLowerCase();
             const words = text.split(/\s+/);
             let foundQty = 0;
             let foundProduct = null;
 
-            // Heuristic number extraction
             for (let w of words) {
                 if (!isNaN(parseInt(w))) {
                     foundQty = parseInt(w);
                     break;
                 }
             }
-
-            // Heuristic product extraction (match SKU or major keywords)
             for (let item of inventory) {
                 if (text.includes(item.product_id.toLowerCase()) ||
                     item.name.toLowerCase().split(' ').some(kw => kw.length > 4 && text.includes(kw))) {
@@ -60,15 +72,17 @@ export default function WarehouseReceive() {
 
             if (foundProduct && foundQty > 0) {
                 updateStock(foundProduct.product_id, foundQty);
-                setNlpStatus(`✓ NLP MATCH LOGGED: Successfully added ${foundQty} units to ${foundProduct.name} (${foundProduct.product_id})`);
+                setNlpStatus(`✓ LOG: Added ${foundQty} units to ${foundProduct.product_id} || ${data.answer}`);
             } else {
-                setNlpStatus("⚠ NLP WARNING: Ambiguous command. Could not extract explicit (Quantity) and (Product_ID) parameters.");
+                setNlpStatus(data.answer);
             }
 
-            setNlpCommand('');
-            setTimeout(() => setNlpStatus(''), 7000);
+        } catch (error) {
+            setNlpStatus(`⚠ API ERROR: Failed to reach BERT endpoint: ${error.message}`);
+        }
 
-        }, 1200);
+        setNlpCommand('');
+        setTimeout(() => setNlpStatus(''), 9000);
     };
 
     return (
