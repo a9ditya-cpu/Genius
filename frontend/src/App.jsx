@@ -14,18 +14,17 @@ const ProtectedRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Rich Presentation Mock Data
 const MOCK_DATA = [
-    { product_id: 'SKU-7829', name: 'Organic Honeycrisp Apples (Bag)', base_price: 6.99, current_price: 6.99, current_quantity: 145, shelf_life_days: 12, category: 'Produce' },
-    { product_id: 'SKU-1024', name: 'Artisan Sourdough Loaf', base_price: 5.49, current_price: 5.49, current_quantity: 32, shelf_life_days: 2, category: 'Bakery' },
-    { product_id: 'SKU-4451', name: 'Premium Greek Yogurt (Vanilla)', base_price: 4.99, current_price: 4.99, current_quantity: 88, shelf_life_days: 8, category: 'Dairy' },
-    { product_id: 'SKU-9921', name: 'Fresh Atlantic Salmon Fillet', base_price: 18.99, current_price: 18.99, current_quantity: 14, shelf_life_days: 3, category: 'Seafood' },
-    { product_id: 'SKU-3320', name: 'Wagyu Beef Ribeye Steak', base_price: 34.99, current_price: 34.99, current_quantity: 8, shelf_life_days: 5, category: 'Meat' },
-    { product_id: 'SKU-1102', name: 'Avocado (Haas) 4-pack', base_price: 4.50, current_price: 4.50, current_quantity: 210, shelf_life_days: 6, category: 'Produce' },
-    { product_id: 'SKU-5544', name: 'Organic Baby Spinach', base_price: 3.99, current_price: 3.99, current_quantity: 65, shelf_life_days: 4, category: 'Produce' },
-    { product_id: 'SKU-8871', name: 'Cold-Pressed Orange Juice', base_price: 5.99, current_price: 5.99, current_quantity: 42, shelf_life_days: 7, category: 'Beverage' },
-    { product_id: 'SKU-2219', name: 'Free-Range Brown Eggs (Dozen)', base_price: 4.29, current_price: 4.29, current_quantity: 115, shelf_life_days: 14, category: 'Dairy' },
-    { product_id: 'SKU-6633', name: 'Gourmet Chocolate Truffles', base_price: 12.99, current_price: 12.99, current_quantity: 18, shelf_life_days: 45, category: 'Snacks' }
+    { product_id: 'SKU-7829', name: 'Cotton Premium T-shirt (Black)', base_price: 1299.00, current_price: 1299.00, current_quantity: 145, shelf_life_days: 12, category: 'Tops' },
+    { product_id: 'SKU-1024', name: 'Vintage Denim Jacket', base_price: 4599.00, current_price: 4599.00, current_quantity: 32, shelf_life_days: 2, category: 'Outerwear' },
+    { product_id: 'SKU-4451', name: 'Slim Fit Chino Pants', base_price: 2499.00, current_price: 2499.00, current_quantity: 88, shelf_life_days: 8, category: 'Bottoms' },
+    { product_id: 'SKU-9921', name: 'Athletic Running Shorts', base_price: 1899.00, current_price: 1899.00, current_quantity: 14, shelf_life_days: 3, category: 'Activewear' },
+    { product_id: 'SKU-3320', name: 'Merino Wool Sweater', base_price: 3499.00, current_price: 3499.00, current_quantity: 8, shelf_life_days: 5, category: 'Knitwear' },
+    { product_id: 'SKU-1102', name: 'Classic Crew Neck Sweater', base_price: 2899.00, current_price: 2899.00, current_quantity: 210, shelf_life_days: 60, category: 'Knitwear' },
+    { product_id: 'SKU-5544', name: 'Linen Blend Button-Down', base_price: 2199.00, current_price: 2199.00, current_quantity: 65, shelf_life_days: 45, category: 'Tops' },
+    { product_id: 'SKU-8871', name: 'High-Waist Leggings', base_price: 1699.00, current_price: 1699.00, current_quantity: 42, shelf_life_days: 70, category: 'Activewear' },
+    { product_id: 'SKU-2219', name: 'Wool Blend Overcoat', base_price: 8999.00, current_price: 8999.00, current_quantity: 115, shelf_life_days: 140, category: 'Outerwear' },
+    { product_id: 'SKU-6633', name: 'Silk Sleepwear Set', base_price: 5499.00, current_price: 5499.00, current_quantity: 18, shelf_life_days: 45, category: 'Loungewear' }
 ];
 
 function App() {

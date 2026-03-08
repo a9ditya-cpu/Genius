@@ -50,7 +50,7 @@ export default function InventoryManager() {
                                 <td style={{ fontWeight: '600', color: '#0f172a' }}>{item.name}</td>
                                 <td><span style={{ color: 'var(--accent-blue)', fontSize: '0.85rem', fontWeight: 600 }}>{item.category}</span></td>
                                 <td style={{ fontWeight: '500' }}>{item.current_quantity} units</td>
-                                <td>${item.base_price.toFixed(2)}</td>
+                                <td>₹{item.base_price.toFixed(2)}</td>
                                 <td>{item.shelf_life_days} Days</td>
                                 <td>
                                     <span className={`badge ${item.current_quantity === 0 ? 'red' : item.current_quantity < 30 ? 'yellow' : 'green'}`}>

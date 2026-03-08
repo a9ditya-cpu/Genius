@@ -15,8 +15,8 @@ export default function MarkdownAI() {
             return {
                 ...item,
                 suggested_price: suggested,
-                reason: `ML Engine suggests 15% drop to maximize margin before Day ${item.shelf_life_days} Expiration.`,
-                impact: `Applying this AI Markdown will rescue ${unitsRescued} units from spoilage and recover $${valueSaved} in lost revenue.`
+                reason: `ML Engine suggests 15% drop to maximize margin before Day ${item.shelf_life_days} End-of-Season.`,
+                impact: `Applying this AI Markdown will rescue ${unitsRescued} units from dead-stock and recover ₹${valueSaved} in lost revenue.`
             };
         });
 
@@ -51,12 +51,12 @@ export default function MarkdownAI() {
                         <div className="price-comparison" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
                             <div className="price-block old" style={{ textAlign: 'center' }}>
                                 <span className="label text-muted" style={{ display: 'block', fontSize: '0.85rem' }}>Current Price</span>
-                                <span className="value" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>${rec.base_price.toFixed(2)}</span>
+                                <span className="value" style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>₹{rec.base_price.toFixed(2)}</span>
                             </div>
                             <ArrowRight className="text-muted" />
                             <div className="price-block new" style={{ textAlign: 'center' }}>
                                 <span className="label text-gradient" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold' }}>AI Suggested</span>
-                                <span className="value" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-cyan)' }}>${rec.suggested_price.toFixed(2)}</span>
+                                <span className="value" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-cyan)' }}>₹{rec.suggested_price.toFixed(2)}</span>
                             </div>
                         </div>
 

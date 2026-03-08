@@ -40,13 +40,13 @@ const InventoryList = ({ inventory, onMarkdown }) => {
                                         {item.current_quantity} units
                                     </span>
                                 </td>
-                                <td style={{ color: 'var(--text-muted)' }}>${item.base_price.toFixed(2)}</td>
+                                <td style={{ color: 'var(--text-muted)' }}>₹{item.base_price.toFixed(2)}</td>
                                 <td>
                                     <span style={{
                                         color: isDiscounted ? 'var(--accent-green)' : 'var(--text-main)',
                                         fontWeight: isDiscounted ? 600 : 400
                                     }}>
-                                        ${item.current_price.toFixed(2)}
+                                        ₹{item.current_price.toFixed(2)}
                                     </span>
                                 </td>
                                 <td style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '220px' }}>
