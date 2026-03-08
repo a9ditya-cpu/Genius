@@ -26,12 +26,12 @@ export default function MarkdownAI() {
 
     return (
         <div className="workspace-panel">
-            <div className="ai-header">
+            <div className="ai-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
                         Markdown Intelligence <Bot style={{ color: 'var(--accent-cyan)' }} />
                     </h2>
-                    <p className="text-muted" style={{ marginTop: '0.5rem' }}>AI-Powered Price Optimization Engine</p>
+                    <p className="text-muted" style={{ marginTop: '0.5rem', marginBottom: 0 }}>AI-Powered Price Optimization Engine</p>
                 </div>
                 {recommendations.length > 0 && (
                     <button className="btn-success" onClick={approveAll} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
