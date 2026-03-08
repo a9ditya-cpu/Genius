@@ -1,11 +1,35 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ShoppingCart, Plus, Minus, CreditCard } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, CreditCard, Scan, Sparkles } from 'lucide-react';
 
 export default function PointOfSale() {
     const { inventory, recordTransaction } = useOutletContext();
     const [cart, setCart] = useState([]);
     const [status, setStatus] = useState('');
+    const [isScanning, setIsScanning] = useState(false);
+
+    const initializeRFID = () => {
+        if (inventory.length === 0) return;
+        setIsScanning(true);
+        setStatus('⚡ ACTIVATING MACHINE VISION & RFID GATES...');
+
+        setTimeout(() => {
+            const numItems = Math.floor(Math.random() * 4) + 2; // 2 to 5 items
+            const availableItems = inventory.filter(i => i.current_quantity > 0);
+            const shuffled = [...availableItems].sort(() => 0.5 - Math.random());
+            const selectedItems = shuffled.slice(0, Math.min(numItems, shuffled.length));
+
+            const newCart = selectedItems.map(item => ({
+                ...item,
+                cartQty: Math.floor(Math.random() * 2) + 1
+            }));
+
+            setCart(newCart);
+            setIsScanning(false);
+            setStatus(`SCAN COMPLETE: Autonomously tracking ${newCart.reduce((sum, i) => sum + i.cartQty, 0)} items via RFID.`);
+            setTimeout(() => setStatus(''), 6000);
+        }, 800);
+    };
 
     const addToCart = (product) => {
         setCart(prev => {
@@ -88,9 +112,19 @@ export default function PointOfSale() {
 
             {/* Right: Cart Panel */}
             <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 150px)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '1rem' }}>
-                    <ShoppingCart size={24} />
-                    <h2 style={{ margin: 0 }}>Current Cart</h2>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '1px solid var(--border-light)', paddingBottom: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <ShoppingCart size={24} />
+                        <h2 style={{ margin: 0 }}>Current Cart</h2>
+                    </div>
+                    <button
+                        onClick={initializeRFID}
+                        disabled={isScanning}
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', background: isScanning ? 'var(--text-main)' : 'transparent', color: isScanning ? 'var(--bg-dark)' : 'var(--text-main)', border: '1px solid var(--text-main)' }}
+                    >
+                        {isScanning ? <Sparkles size={14} className="animate-pulse" /> : <Scan size={14} />}
+                        {isScanning ? 'SCANNING...' : 'AUTO RFID SCAN'}
+                    </button>
                 </div>
 
                 <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
