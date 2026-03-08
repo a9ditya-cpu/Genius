@@ -22,10 +22,15 @@ fi
 # Step 2: Create certbot webroot directory for ACME challenge
 sudo mkdir -p /var/www/certbot
 
-# Step 3: Copy Nginx config
-sudo cp ~/Genius/nginx.conf /etc/nginx/sites-available/genius
-sudo ln -sf /etc/nginx/sites-available/genius /etc/nginx/sites-enabled/genius
-sudo rm -f /etc/nginx/sites-enabled/default
+# Step 3: Copy Nginx config (ONLY if it doesn't already have SSL managed by certbot)
+if ! grep -q "ssl_certificate" /etc/nginx/sites-available/genius 2>/dev/null; then
+    echo "Deploying base Nginx configuration..."
+    sudo cp ~/Genius/nginx.conf /etc/nginx/sites-available/genius
+    sudo ln -sf /etc/nginx/sites-available/genius /etc/nginx/sites-enabled/genius
+    sudo rm -f /etc/nginx/sites-enabled/default
+else
+    echo "Nginx is already configured with SSL. Skipping base config overwrite."
+fi
 
 # Step 4: Test and reload Nginx
 sudo nginx -t && sudo systemctl reload nginx
