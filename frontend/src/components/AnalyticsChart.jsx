@@ -10,9 +10,10 @@ const AnalyticsChart = ({ data }) => {
         // Clear previous chart
         d3.select(svgRef.current).selectAll("*").remove();
 
-        const margin = { top: 20, right: 30, bottom: 40, left: 40 };
-        const width = Number(window.innerWidth > 768 ? 400 : 300) - margin.left - margin.right;
-        const height = 300 - margin.top - margin.bottom;
+        const margin = { top: 30, right: 30, bottom: 50, left: 40 };
+        const parentWidth = svgRef.current.parentNode.getBoundingClientRect().width || 350;
+        const width = parentWidth - margin.left - margin.right;
+        const height = 320 - margin.top - margin.bottom;
 
         const svg = d3.select(svgRef.current)
             .attr("width", width + margin.left + margin.right)
@@ -75,7 +76,7 @@ const AnalyticsChart = ({ data }) => {
             .style("fill", "var(--text-main)")
             .style("font-weight", "bold")
             .style("font-size", "14px")
-            .text(`Demand Model: ${data.name}`);
+            .text(`Model: ${data.name.slice(0, 20)}${data.name.length > 20 ? '...' : ''}`);
 
     }, [data]);
 

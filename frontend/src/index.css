@@ -331,13 +331,13 @@ button:active {
   gap: 1.5rem;
 }
 
-.recommendations-grid {
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-}
-
 @media (min-width: 1024px) {
   .grid-layout {
     grid-template-columns: 2fr 1fr;
+  }
+
+  .grid-layout.recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   }
 }
 
