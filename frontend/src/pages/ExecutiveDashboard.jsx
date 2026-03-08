@@ -7,7 +7,7 @@ export default function ExecutiveDashboard() {
 
     return (
         <div>
-            <h2 style={{ marginBottom: '1.5rem' }}>Executive Overview</h2>
+            <h2 style={{ marginBottom: '1.5rem', color: 'var(--accent-blue)' }}>Global Executive Overview</h2>
             <Dashboard inventory={inventory} onMarkdown={triggerMarkdown} />
         </div>
     );
