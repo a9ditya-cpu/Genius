@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Bot, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Bot, Settings, LogOut, Hexagon } from 'lucide-react';
 
 export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
     const location = useLocation();
@@ -30,8 +30,10 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
             {/* Top Header */}
             <header className="main-header">
                 <div className="header-brand">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" alt="Logo" style={{ height: '30px', filter: 'grayscale(100%) brightness(0.2)' }} onError={(e) => e.target.style.display = 'none'} />
-                    <h1>Genius <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>Workspace</span></h1>
+                    <div style={{ color: 'var(--accent-blue)', display: 'flex', alignItems: 'center' }}>
+                        <Hexagon size={32} fill="currentColor" strokeWidth={1.5} />
+                    </div>
+                    <h1 style={{ margin: 0 }}>Genius <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>Workspace</span></h1>
                 </div>
                 <div className="header-actions">
                     <span className="text-muted" style={{ marginRight: '1rem', fontWeight: 600 }}>Welcome, {displayName}</span>
