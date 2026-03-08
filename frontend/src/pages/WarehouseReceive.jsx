@@ -39,7 +39,7 @@ export default function WarehouseReceive() {
             // Compress the inventory state into string context for the ML model
             const contextData = inventory.map(i => `${i.current_quantity}x ${i.name} (${i.product_id})`).join(", ");
 
-            const response = await fetch('http://localhost:5000/api/nlp/chat', {
+            const response = await fetch('/api/nlp/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
