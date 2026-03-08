@@ -1,28 +1,21 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Package, Bot, Settings, LogOut } from 'lucide-react';
-import { useMsal } from '@azure/msal-react';
 
 export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
     const location = useLocation();
     const navigate = useNavigate();
-    const { accounts, instance } = useMsal();
 
-    // Show MS user name if logged in via Microsoft, else default Admin
+    // Show MS user name if logged in, else default Admin
     const msUser = localStorage.getItem('msUser');
-    const displayName = msUser || (accounts[0]?.name) || 'Admin';
+    const displayName = msUser || 'Admin';
 
     const handleLogout = () => {
         // Clear all auth methods
         localStorage.removeItem('auth');
         localStorage.removeItem('msUser');
         localStorage.removeItem('authMethod');
-        // Sign out from Microsoft if that was the login method
-        if (accounts.length > 0) {
-            instance.logoutPopup({ postLogoutRedirectUri: '/login' });
-        } else {
-            navigate('/login');
-        }
+        navigate('/login');
     };
 
     const navItems = [
