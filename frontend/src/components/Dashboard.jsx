@@ -5,8 +5,8 @@ import { Package, TrendingDown, Layers } from 'lucide-react';
 
 const Dashboard = ({ inventory, onMarkdown }) => {
     // Calculate simple stats
-    const totalItems = inventory.reduce((acc, item) => acc + item.quantity, 0);
-    const lowStockItems = inventory.filter(item => item.quantity < 50).length;
+    const totalItems = inventory.reduce((acc, item) => acc + item.current_quantity, 0);
+    const lowStockItems = inventory.filter(item => item.current_quantity < 30).length;
     const avgDiscount = inventory.reduce((acc, item) => {
         if (item.base_price > item.current_price) {
             return acc + ((item.base_price - item.current_price) / item.base_price);

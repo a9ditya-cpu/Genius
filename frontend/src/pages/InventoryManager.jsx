@@ -36,32 +36,26 @@ export default function InventoryManager() {
                         <tr>
                             <th>SKU ID</th>
                             <th>Product Name</th>
-                            <th>Initial Stock</th>
+                            <th>Category</th>
                             <th>Current Stock</th>
                             <th>Base Price</th>
-                            <th>Shelf Life (Days)</th>
+                            <th>Shelf Life</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filtered.map(item => (
                             <tr key={item.product_id}>
-                                <td><code>{item.product_id}</code></td>
-                                <td style={{ fontWeight: 'bold' }}>{item.name}</td>
-                                <td>{item.initial_quantity}</td>
-                                <td>{item.current_quantity}</td>
+                                <td><code style={{ background: '#f1f5f9', padding: '0.2rem 0.5rem', borderRadius: '4px', color: '#0f172a' }}>{item.product_id}</code></td>
+                                <td style={{ fontWeight: '600', color: '#0f172a' }}>{item.name}</td>
+                                <td><span style={{ color: 'var(--accent-blue)', fontSize: '0.85rem', fontWeight: 600 }}>{item.category}</span></td>
+                                <td style={{ fontWeight: '500' }}>{item.current_quantity} units</td>
                                 <td>${item.base_price.toFixed(2)}</td>
-                                <td>{item.shelf_life_days}</td>
+                                <td>{item.shelf_life_days} Days</td>
                                 <td>
-                                    <span className={`badge ${item.current_quantity === 0 ? 'red' : item.current_quantity < 20 ? 'yellow' : 'green'}`}>
-                                        {item.current_quantity === 0 ? 'Out of Stock' : item.current_quantity < 20 ? 'Low Stock' : 'Healthy'}
+                                    <span className={`badge ${item.current_quantity === 0 ? 'red' : item.current_quantity < 30 ? 'yellow' : 'green'}`}>
+                                        {item.current_quantity === 0 ? 'Out of Stock' : item.current_quantity < 30 ? 'Low Stock' : 'Healthy'}
                                     </span>
-                                </td>
-                                <td>
-                                    <button className="btn-icon" style={{ padding: '0.4rem', background: 'rgba(255,255,255,0.1)' }}>
-                                        <Settings size={14} />
-                                    </button>
                                 </td>
                             </tr>
                         ))}

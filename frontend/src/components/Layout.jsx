@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Bot, LogOut } from 'lucide-react';
+import { LayoutDashboard, Package, Bot, Settings, LogOut } from 'lucide-react';
 import { useMsal } from '@azure/msal-react';
 
 export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
@@ -28,18 +28,21 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
     const navItems = [
         { path: '/', label: 'Executive Dashboard', icon: <LayoutDashboard size={20} /> },
         { path: '/inventory', label: 'Inventory Manager', icon: <Package size={20} /> },
-        { path: '/markdown-ai', label: 'MarkDown Intelligence', icon: <Bot size={20} /> }
+        { path: '/markdown-ai', label: 'MarkDown Intelligence', icon: <Bot size={20} /> },
+        { path: '/settings', label: 'System Settings', icon: <Settings size={20} /> }
     ];
 
     return (
         <div className="app-layout">
             {/* Top Header */}
-            <header className="main-header glass-panel">
+            <header className="main-header">
                 <div className="header-brand">
-                    <h2 className="text-gradient" style={{ margin: 0 }}>Smart Markdown System</h2>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png" alt="Logo" style={{ height: '30px', filter: 'grayscale(100%) brightness(0.2)' }} onError={(e) => e.target.style.display = 'none'} />
+                    <h1>Genius <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>Workspace</span></h1>
                 </div>
                 <div className="header-actions">
-                    <span className="text-muted" style={{ marginRight: '1rem' }}>Welcome, {displayName}</span>
+                    <span className="text-muted" style={{ marginRight: '1rem', fontWeight: 600 }}>Welcome, {displayName}</span>
+                    <div className="profile-circle">{displayName.charAt(0)}</div>
                     <button onClick={handleLogout} className="btn-icon" title="Logout">
                         <LogOut size={18} />
                     </button>
@@ -72,7 +75,7 @@ export default function Layout({ inventory, fetchInventory, triggerMarkdown }) {
             {/* Footer */}
             <footer className="main-footer">
                 <p className="text-muted" style={{ fontSize: '0.85rem' }}>
-                    &copy; 2026 Optimized In-Store Inventory Management System for Markdown Events.
+                    &copy; 2024 Genius Enterprise Intelligence &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Privacy Policy</a> &bull; <a href="#" style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}>Terms of Service</a> &bull; Version 4.8.2
                 </p>
             </footer>
         </div>

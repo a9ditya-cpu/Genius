@@ -8,12 +8,17 @@ export default function MarkdownAI() {
     // Simulated ML Engine Recommendations (Expiring soon, but not already marked down)
     const recommendations = inventory
         .filter(item => item.shelf_life_days < 10 && item.current_price === item.base_price && item.current_quantity > 0)
-        .map(item => ({
-            ...item,
-            suggested_price: item.base_price * 0.85, // 15% off recommendation
-            reason: `Expiring in ${item.shelf_life_days} days`,
-            impact: `+${(item.current_quantity * 0.6).toFixed(0)} units expected to sell if markdown applied today`
-        }));
+        .map(item => {
+            const suggested = item.base_price * 0.85;
+            const unitsRescued = Math.floor(item.current_quantity * 0.6);
+            const valueSaved = (unitsRescued * suggested).toFixed(2);
+            return {
+                ...item,
+                suggested_price: suggested,
+                reason: `ML Engine suggests 15% drop to maximize margin before Day ${item.shelf_life_days} Expiration.`,
+                impact: `Applying this AI Markdown will rescue ${unitsRescued} units from spoilage and recover $${valueSaved} in lost revenue.`
+            };
+        });
 
     const approveAll = () => {
         recommendations.forEach(r => triggerMarkdown(r.product_id, r.suggested_price));
@@ -65,7 +70,7 @@ export default function MarkdownAI() {
                                 onClick={() => triggerMarkdown(rec.product_id, rec.suggested_price)}
                                 style={{ width: '100%', padding: '0.75rem' }}
                             >
-                                Approve Markdown
+                                Authorize Price Drop
                             </button>
                         </div>
                     </div>

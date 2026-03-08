@@ -1,14 +1,14 @@
 /**
  * Microsoft Identity Platform (MSAL) Configuration
  *
- * HOW TO COMPLETE SETUP:
- * 1. Go to https://portal.azure.com
- * 2. Navigate to Azure Active Directory > App registrations > New registration
- * 3. Name: "Smart Markdown System", Account Types: "Any Azure AD + personal accounts"
- * 4. Redirect URI: Select "SPA" and add:
+ * SETUP STEPS:
+ * 1. Go to https://portal.azure.com → Azure Active Directory → App registrations → New registration
+ * 2. Name: "Smart Markdown System"
+ * 3. Account types: "Accounts in any organizational directory and personal Microsoft accounts"
+ * 4. Redirect URI → Platform: SPA → Add BOTH of these URIs:
  *    - http://localhost:5173
- *    - http://35.154.159.107:5173  (your live AWS IP)
- * 5. After registering, copy the "Application (client) ID" and "Directory (tenant) ID" below.
+ *    - https://ec2-35-154-159-107.ap-south-1.compute.amazonaws.com
+ * 5. Click Register, then copy the "Application (client) ID" and paste below.
  */
 
 export const msalConfig = {
@@ -16,10 +16,10 @@ export const msalConfig = {
         // ⚠️ REPLACE THIS with your Application (client) ID from Azure Portal
         clientId: "YOUR_CLIENT_ID_HERE",
 
-        // ⚠️ REPLACE THIS with your Directory (tenant) ID, OR use "common" for all MS accounts
+        // Use "common" to allow both personal and organizational Microsoft accounts
         authority: "https://login.microsoftonline.com/common",
 
-        // This MUST exactly match a Redirect URI you added in the Azure Portal
+        // Automatically picks localhost for local dev or the HTTPS domain for production
         redirectUri: window.location.origin,
     },
     cache: {

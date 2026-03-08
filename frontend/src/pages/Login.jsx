@@ -53,9 +53,9 @@ export default function Login() {
     return (
         <div className="login-wrapper animate-fade">
             <div className="glass-panel login-card">
-                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-                    <h1 className="text-gradient">System Login</h1>
-                    <p className="text-muted">Smart Retail Inventory Management</p>
+                <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+                    <h1 className="text-gradient" style={{ fontSize: '2.2rem' }}>Genius</h1>
+                    <p className="text-muted" style={{ fontWeight: 500 }}>Enterprise Initialization Gateway</p>
                 </div>
 
                 {/* Microsoft Login */}
@@ -65,16 +65,18 @@ export default function Login() {
                     className="ms-login-btn"
                     style={{
                         width: '100%',
-                        padding: '0.8rem',
+                        padding: '0.85rem',
                         marginBottom: '1.5rem',
-                        background: '#2F2F2F',
-                        border: '1px solid rgba(255,255,255,0.2)',
+                        background: '#ffffff',
+                        color: '#0f172a',
+                        border: '1px solid #cbd5e1',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '0.75rem',
                         fontSize: '1rem',
-                        boxShadow: '0 4px 14px rgba(0,0,0,0.4)',
+                        fontWeight: 600,
+                        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
                     }}
                 >
                     {/* Microsoft Logo SVG */}
