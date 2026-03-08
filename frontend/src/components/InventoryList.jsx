@@ -9,7 +9,7 @@ const InventoryList = ({ inventory, onMarkdown }) => {
 
     return (
         <div style={{ overflowX: 'auto' }}>
-            <table>
+            <table className="inventory-table">
                 <thead>
                     <tr>
                         <th>Product ID</th>
@@ -37,7 +37,7 @@ const InventoryList = ({ inventory, onMarkdown }) => {
                                 <td>{item.category}</td>
                                 <td>
                                     <span className={`badge ${stockStatus}`}>
-                                        {item.quantity} units
+                                        {item.current_quantity} units
                                     </span>
                                 </td>
                                 <td style={{ color: 'var(--text-muted)' }}>${item.base_price.toFixed(2)}</td>
@@ -49,10 +49,11 @@ const InventoryList = ({ inventory, onMarkdown }) => {
                                         ${item.current_price.toFixed(2)}
                                     </span>
                                 </td>
-                                <td style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                <td style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '220px' }}>
                                     <input
                                         type="number"
-                                        placeholder="Price overwrite"
+                                        style={{ width: '100px' }}
+                                        placeholder="Overwrite"
                                         value={customPrices[item.product_id] || ''}
                                         onChange={(e) => handlePriceChange(item.product_id, e.target.value)}
                                         title="Leave empty for ML suggestion"
