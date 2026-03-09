@@ -3,12 +3,6 @@
 ## Project Description
 A comprehensive, full-stack application designed to optimize in-store inventory and dynamic pricing for markdown events. This system empowers retail staff to make data-driven decisions on stock levels and dynamic pricing to prevent overstocking and stockouts.
 
-## 🚀 Hackathon "WOW" Features
-- **Amazon Just-Walk-Out RFID Checkout**: Simulated frictionless cart system (`/pos`) that instantly mutates global stock indices.
-- **Supply Chain Shock Simulator**: Injects synthetic virality onto the dashboard (`/`), destroying stock levels to highlight the continuous Autonomous Pricing Algorithms.
-- **Predictive Burn-Rate Chart**: Time-Series D3.js visualization projecting the exact date of total stockout based on historical vector tracking.
-- **Conversational AI Copilot**: Live Hugging Face `distilbert-base-cased` Neural Network that translates human semantic text into direct warehouse receiving database queries (`/receive`).
-
 ## System Architecture
 
 The Genius platform operates on a robust, microservices-oriented architecture deployed on AWS EC2, featuring real-time AI integration.
