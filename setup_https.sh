@@ -2,7 +2,7 @@
 # setup_https.sh - Installs Nginx + Certbot on the EC2 instance and configures HTTPS
 # This runs automatically via GitHub Actions on every push to main
 
-EC2_DOMAIN="ec2-35-154-159-107.ap-south-1.compute.amazonaws.com"
+EC2_DOMAIN="ec2-65-2-188-162.ap-south-1.compute.amazonaws.com"
 EMAIL="sinharajaditya@admin"  # Used for Let's Encrypt certificate expiry alerts
 
 echo "=== Setting up HTTPS for $EC2_DOMAIN ==="
